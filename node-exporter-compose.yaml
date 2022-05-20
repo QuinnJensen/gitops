@@ -1,0 +1,64 @@
+version: "3"
+services:
+  node-exporter:
+    cap_add:
+      - AUDIT_WRITE
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - FSETID
+      - KILL
+      - MKNOD
+      - NET_BIND_SERVICE
+      - NET_RAW
+      - SETFCAP
+      - SETGID
+      - SETPCAP
+      - SETUID
+      - SYS_CHROOT
+    cap_drop:
+      - AUDIT_CONTROL
+      - BLOCK_SUSPEND
+      - DAC_READ_SEARCH
+      - IPC_LOCK
+      - IPC_OWNER
+      - LEASE
+      - LINUX_IMMUTABLE
+      - MAC_ADMIN
+      - MAC_OVERRIDE
+      - NET_ADMIN
+      - NET_BROADCAST
+      - SYSLOG
+      - SYS_ADMIN
+      - SYS_BOOT
+      - SYS_MODULE
+      - SYS_NICE
+      - SYS_PACCT
+      - SYS_PTRACE
+      - SYS_RAWIO
+      - SYS_RESOURCE
+      - SYS_TIME
+      - SYS_TTY_CONFIG
+      - WAKE_ALARM
+    container_name: node-exporter
+    entrypoint:
+      - /bin/node_exporter
+    environment:
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    expose:
+      - 9100/tcp
+    hostname: nodexp
+    image: prom/node-exporter:latest
+    ipc: private
+    labels:
+      maintainer: The Prometheus Authors <prometheus-developers@googlegroups.com>
+    logging:
+      driver: json-file
+      options: {}
+    networks:
+      - host
+    user: nobody
+networks:
+  host:
+    external: true
+    name: host
